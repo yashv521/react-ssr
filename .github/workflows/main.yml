@@ -22,7 +22,7 @@ jobs:
       run: npm i
 
     - name: Build application
-      run: npm run build
+      run: npm run dev
 
     - name: Deploy to AWS S3
       run: |
