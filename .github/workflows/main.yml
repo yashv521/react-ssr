@@ -16,7 +16,13 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '16'
+        node-version: '16' # Updated to Node.js 16
+
+    - name: Setup Python 2.7
+      run: |
+        sudo apt-get update
+        sudo apt-get install python2.7
+        npm config set python python2.7
 
     - name: Install dependencies
       run: npm i
@@ -28,9 +34,9 @@ jobs:
       run: |
         aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws configure set region us-east-1  # Replace with your AWS region
         aws s3 sync ./build s3://devops-react --acl public-read
 
     - name: Get S3 Bucket URL
       run: |
-        S3_BUCKET_URL="https://your-bucket-name.s3.amazonaws.com"
-        echo "AWS S3 Bucket URL: $S3_BUCKET_URL"
+        echo "AWS S3 Bucket URL: https://devops-react.s3.amazonaws.com"
